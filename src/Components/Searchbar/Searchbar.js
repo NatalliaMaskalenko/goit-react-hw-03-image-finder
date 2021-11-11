@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { ImSearch } from 'react-icons/im';
+// import {ImSearch} from 'react-icons/im'
 
 export default class Searchbar extends Component{
     state = {
@@ -10,26 +10,24 @@ export default class Searchbar extends Component{
       this.setState({name: e.currentTarget.value.toLowerCase()})
     }
     
-    handleSearchSubmit = e => {
+    handleSubmit = e => {
         e.preventDefault();
-        this.props.onSubmit(this.state);
-        this.reset()
-    }
-    
-    reset = () => {
-        this.setState({
-            name: ''
-        });
-    }
-        
+        if (this.state.name.trim() === '') {
+            window.alert('Введите запрос');
+            return;
+         }
+        this.props.onSubmit(this.state.name);
+        // this.setState({
+        //     name: ''
+        // });
+    }    
+       
     render() {
         return (
             <header className="Searchbar">
-                <form onSubmit={this.props.handleSearchSubmit} className="SearchForm">
+                <form onSubmit={this.handleSubmit} className="SearchForm">
                     <button type="submit" className="SearchForm-button">
-                        <span className="SearchForm-button-label">
-                            <ImSearch style={{color:"black"}}/>
-                      </span>
+                        <span className="SearchForm-button-label">Search</span>
                     </button>
                     <input
                         value={this.state.name}
