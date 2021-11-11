@@ -19,14 +19,14 @@ export default class PixabayFetchObj{
         return this._page;
     }
     set page(value) {
-        return this._page += value;
+        return this._page = value;
     }
     // создаем метод
     searchPhotos() {
         axios.defaults.baseURL = this.base_url;
        
         let url = `?key=${this.api_key}&q=${this.name}&page=${this.page}&per_page=12&image_type=photo&orientation=horizontalv`;
-        
+        console.log(this.page, this.name);
         return axios
             .get(url)
             .then((resalt) => {

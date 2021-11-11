@@ -1,6 +1,6 @@
-export default function ImageGalleryItem({ key, photo, alt }) {
+export default function ImageGalleryItem({  photo, alt }) {
     return (
-        <li key={key} className="ImageGalleryItem">
+        <li className="ImageGalleryItem">
             <img src={photo} alt={alt} className="ImageGalleryItem-image" />
         </li>
     )
