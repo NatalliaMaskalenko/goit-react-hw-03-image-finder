@@ -1,10 +1,11 @@
-export default function Button({handleClick}) {
+import PropTypes from 'prop-types';
+
+export default function Button({ handleClick }) {
      return (
         <button type="button" onClick={(handleClick)}>Load more</button>
     )
 }
 
-// window.scrollTo({
-//   top: document.documentElement.scrollHeight,
-//   behavior: 'smooth',
-// });
+Button.propTypes = {
+    handleClick: PropTypes.func,
+};

@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import Loader from "react-loader-spinner";
+import PropTypes from 'prop-types';
 import PixabayFetchObj from '../../services/pixabay';
 import ImageGalleryItem from '../ImageGalleryItem';
 import Button from '../Button';
@@ -99,4 +100,6 @@ export default class ImageGallery extends Component {
     }
     }
 
- 
+ ImageGallery.propTypes = {
+    name: PropTypes.string,
+};
