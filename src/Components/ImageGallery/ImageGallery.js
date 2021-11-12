@@ -4,11 +4,13 @@ import PropTypes from 'prop-types';
 import PixabayFetchObj from '../../services/pixabay';
 import ImageGalleryItem from '../ImageGalleryItem';
 import Button from '../Button';
+import Modal from '../Modal'
 
 export default class ImageGallery extends Component {
     state = {
         gallery: [],
         status: 'init',
+        showModal: false,
     }
     
     newPixabayFetchObj = new PixabayFetchObj();
@@ -41,6 +43,15 @@ export default class ImageGallery extends Component {
             });
         }
     }
+
+    componentDidMount() {
+        window.addEventListener('keydown', e => {
+            if(e === 'Escape')
+        }
+
+        )
+    }
+
     handleClick = () => {
         this.newPixabayFetchObj.page += 1;
         this.newPixabayFetchObj.searchPhotos().then(r => {
@@ -57,19 +68,29 @@ export default class ImageGallery extends Component {
                 status: 'error'
             })
         });
+    }
 
-        window.scrollTo({
-  top: document.documentElement.scrollHeight,
-  behavior: 'smooth',
-});
+    toggleModal = () => {
+        this.setState(state => (
+            { showModal: !state.showModal }
+        ))
+    }
+
+    getPhotoUrl = (url, alt) => {
+        localStorage.setItem('url', JSON.stringify(url));
+        localStorage.setItem('alt', JSON.stringify(alt));
+        this.toggleModal();
     }
 
     render() {
-        if (this.state.status === 'init') {
+        const { gallery, showModal, status } = this.state;
+        const {getPhotoUrl, handleClick  } = this;
+        
+        if (status === 'init') {
          return  <h1>Hello! Search something....</h1>
         }
 
-        if (this.state.status === 'pending') {
+        if (status === 'pending') {
          return  <Loader
                 type="Puff"
                 color="#00BFFF"
@@ -79,26 +100,31 @@ export default class ImageGallery extends Component {
             />
         }
 
-         if (this.state.status === 'success') {
-             return (
+        if (status === 'success') {
+            return (
                  <>
                      <ul className="ImageGallery">
-                         {this.state.gallery.length > 0 && this.state.gallery.map(galleryItem => (<ImageGalleryItem
+                         {gallery.length > 0 && gallery.map(galleryItem => (<ImageGalleryItem
+                             getPhotoUrl={getPhotoUrl}
                              key={galleryItem.id}
                              photo={galleryItem.webformatURL}
+                             photoLage={galleryItem.largeImageURL}
                              alt={galleryItem.tags}
                          />))}
                      </ul>
-                     <Button handleClick={()=>{this.handleClick()}} />
+                     <Button handleClick={() => { handleClick() }} />
+                    {showModal && <Modal onClose ={this.to}>
+                         <img src={JSON.parse(localStorage.getItem('url'))} alt={localStorage.getItem('url')} />
+                    </Modal>}
                  </>
              )
          }
         
-        if (this.state.status === 'error') {
+        if (status === 'error') {
             return <h2>No results were found for your search.</h2>
         }
     }
-    }
+}
 
  ImageGallery.propTypes = {
     name: PropTypes.string,

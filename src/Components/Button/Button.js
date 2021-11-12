@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 
 export default function Button({ handleClick }) {
      return (
-        <button type="button" onClick={(handleClick)}>Load more</button>
+        <button className="Button" type="button" onClick={(handleClick)}>Load more</button>
     )
 }
 

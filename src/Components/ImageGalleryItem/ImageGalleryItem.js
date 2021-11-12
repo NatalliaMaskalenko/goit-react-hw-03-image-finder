@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 
-export default function ImageGalleryItem({ photo, alt }) {
+export default function ImageGalleryItem({ getPhotoUrl, photo, alt, photoLage }) {
     return (
         <li className="ImageGalleryItem">
-            <img src={photo} alt={alt} className="ImageGalleryItem-image" />
+            <img onClick = {()=>getPhotoUrl(photoLage, alt)} src={photo} alt={alt} className="ImageGalleryItem-image" />
         </li>
     )
 }
