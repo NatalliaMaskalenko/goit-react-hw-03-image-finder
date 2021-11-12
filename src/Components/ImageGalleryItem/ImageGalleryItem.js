@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 
-export default function ImageGalleryItem({ getPhotoUrl, photo, alt, photoLage }) {
+export default function ImageGalleryItem({ getBigPhoto, photo, alt, photoLage }) {
     return (
         <li className="ImageGalleryItem">
-            <img onClick = {()=>getPhotoUrl(photoLage, alt)} src={photo} alt={alt} className="ImageGalleryItem-image" />
+            <img onClick = {()=>getBigPhoto(photoLage, alt)} src={photo} alt={alt} className="ImageGalleryItem-image" />
         </li>
     )
 }
@@ -11,4 +11,6 @@ export default function ImageGalleryItem({ getPhotoUrl, photo, alt, photoLage })
 ImageGalleryItem.propTypes = {
     photo: PropTypes.string,
     alt: PropTypes.string,
+    getBigPhoto: PropTypes.func,
+    photoLage: PropTypes.string,
 };

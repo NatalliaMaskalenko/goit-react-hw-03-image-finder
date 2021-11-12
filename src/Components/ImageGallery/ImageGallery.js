@@ -44,14 +44,6 @@ export default class ImageGallery extends Component {
         }
     }
 
-    componentDidMount() {
-        window.addEventListener('keydown', e => {
-            if(e === 'Escape')
-        }
-
-        )
-    }
-
     handleClick = () => {
         this.newPixabayFetchObj.page += 1;
         this.newPixabayFetchObj.searchPhotos().then(r => {
@@ -76,7 +68,7 @@ export default class ImageGallery extends Component {
         ))
     }
 
-    getPhotoUrl = (url, alt) => {
+    getBigPhoto = (url, alt) => {
         localStorage.setItem('url', JSON.stringify(url));
         localStorage.setItem('alt', JSON.stringify(alt));
         this.toggleModal();
@@ -84,7 +76,7 @@ export default class ImageGallery extends Component {
 
     render() {
         const { gallery, showModal, status } = this.state;
-        const {getPhotoUrl, handleClick  } = this;
+        const {toggleModal, getBigPhoto, handleClick  } = this;
         
         if (status === 'init') {
          return  <h1>Hello! Search something....</h1>
@@ -105,16 +97,16 @@ export default class ImageGallery extends Component {
                  <>
                      <ul className="ImageGallery">
                          {gallery.length > 0 && gallery.map(galleryItem => (<ImageGalleryItem
-                             getPhotoUrl={getPhotoUrl}
+                             getBigPhoto={getBigPhoto}
                              key={galleryItem.id}
                              photo={galleryItem.webformatURL}
                              photoLage={galleryItem.largeImageURL}
                              alt={galleryItem.tags}
                          />))}
                      </ul>
-                     <Button handleClick={() => { handleClick() }} />
-                    {showModal && <Modal onClose ={this.to}>
-                         <img src={JSON.parse(localStorage.getItem('url'))} alt={localStorage.getItem('url')} />
+                     <Button className="BtnMore" handleClick={() => { handleClick() }} />
+                    {showModal && <Modal onClose ={toggleModal}>
+                         <img src={JSON.parse(localStorage.getItem('url'))} alt={localStorage.getItem('alt')} />
                     </Modal>}
                  </>
              )
